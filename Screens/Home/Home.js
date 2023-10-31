@@ -9,9 +9,15 @@ import Tab from '../../components/Tab/Tab';
 import {horizontalScale} from '../../assets/styles/scaling';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import Search from '../../components/Search/Search';
 const Home = () => {
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+      <Search
+        onSearch={value => {
+          console.log(value);
+        }}
+      />
       <Header title={'Donation App'} type={1} />
       {/* <Header title={'Donation App'} type={2} />
       <Header title={'Donation App'} type={3} /> */}
