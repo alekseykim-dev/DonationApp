@@ -4,20 +4,20 @@ import {SafeAreaView, Text, View} from 'react-native';
 import globalStyle from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
-
+import Tab from '../../components/Tab/Tab';
+import {horizontalScale} from '../../assets/styles/scaling';
 const Home = () => {
   return (
-    <SafeAreaView style={(globalStyle.backgroundWhite, globalStyle.flex)}>
+    <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
       <Header title={'Donation App'} type={1} />
       {/* <Header title={'Donation App'} type={2} />
       <Header title={'Donation App'} type={3} /> */}
-      <Button
-        title="Donate"
-        onPress={() => {
-          console.log('pressed');
-        }}
-      />
-      {/* <Button title='Donate' isDisabled={true}/> */}
+      {/* <View style={{width: horizontalScale(130)}}>
+        <Tab title="Highlight" />
+      </View> */}
+      <Tab title="Highlight" />
+      <Tab title="Highlight" isInactive={true} />
+
     </SafeAreaView>
   );
 };
