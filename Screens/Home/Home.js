@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './style';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Pressable, SafeAreaView, Text, View} from 'react-native';
 import globalStyle from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
@@ -11,9 +11,21 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import Search from '../../components/Search/Search';
 import SingleDonationItem from '../../components/SingleDonationItem/SingleDonationItem';
+import {useSelector, useDispatch} from 'react-redux';
+import {updateFirstName} from '../../redux/reducers/User';
 const Home = () => {
+  const user = useSelector(state => state.user);
+  console.log(user);
+  const dispatch = useDispatch();
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+      <Header title={`${user.firstName} ${user.lastName}`} />
+      <Pressable
+        onPress={() => {
+          dispatch(updateFirstName({firstName: 'Aleksey'}));
+        }}>
+        <Text>Press to change first name</Text>
+      </Pressable>
       {/* <Search
         onSearch={value => {
           console.log(value);
