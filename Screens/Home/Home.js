@@ -4,6 +4,7 @@ import {SafeAreaView, Text, View} from 'react-native';
 import globalStyle from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
+import Badge from '../../components/Badge/Badge';
 import Tab from '../../components/Tab/Tab';
 import {horizontalScale} from '../../assets/styles/scaling';
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
       </View> */}
       <Tab title="Highlight" />
       <Tab title="Highlight" isInactive={true} />
+      <Badge title={'Environment'}/>
 
     </SafeAreaView>
   );
