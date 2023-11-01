@@ -16,8 +16,11 @@ import style from './style';
 import {ScrollView} from 'react-native-gesture-handler';
 const Home = () => {
   const user = useSelector(state => state.user);
-  console.log(user);
+  // console.log(user); // from store.js
   const dispatch = useDispatch();
+  const categories = useSelector(state => state.categories) 
+  //from store.js
+  // console.log(categories)
   return (
     // <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
     //   <Header title={`${user.firstName} ${user.lastName}`} />
