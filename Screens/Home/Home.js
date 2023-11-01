@@ -22,18 +22,24 @@ import globalStyle from '../../assets/styles/globalStyle';
 import style from './style';
 import {ScrollView} from 'react-native-gesture-handler';
 import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
+import {resetDonations} from '../../redux/reducers/Donations';
 const Home = () => {
-  const user = useSelector(state => state.user);
   // console.log(user); // from store.js
-  const dispatch = useDispatch();
   const categories = useSelector(state => state.categories);
+  const donations = useSelector(state => state.donations);
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
   //from store.js
   // console.log(categories)
 
   const [categoryPage, setCategoryPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
-  const [isLoadingCartegories, setIsLoadingCategories] = useState(false);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const categoryPageSize = 4;
+  // dispatch(resetDonations());
+  //reloads the store and dispatcehs the data  
+//Works the same as the persistor.purge()  in store.js
+  console.log('this is our current donations state', donations);
 
   useEffect(() => {
     setIsLoadingCategories(true);
@@ -89,7 +95,7 @@ const Home = () => {
           <FlatList
             onEndReachedThreshold={0.5}
             onEndReached={() => {
-              if (isLoadingCartegories) return;
+              if (isLoadingCategories) return;
               console.log(
                 'User has reached the end  Fetching page number',
                 categoryPage,
