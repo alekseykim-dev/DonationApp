@@ -1,24 +1,32 @@
 import React from 'react';
-import {Pressable, SafeAreaView, Text, View, Image} from 'react-native';
-import Header from '../../components/Header/Header';
+import {
+  Pressable,
+  SafeAreaView,
+  Text,
+  View,
+  Image,
+  FlatList,
+} from 'react-native';
 import Button from '../../components/Button/Button';
 import Badge from '../../components/Badge/Badge';
-import Tab from '../../components/Tab/Tab';
 import {horizontalScale} from '../../assets/styles/scaling';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import Search from '../../components/Search/Search';
 import SingleDonationItem from '../../components/SingleDonationItem/SingleDonationItem';
 import {useSelector, useDispatch} from 'react-redux';
 import {resetToInitialState, updateFirstName} from '../../redux/reducers/User';
+import Header from '../../components/Header/Header';
+import Search from '../../components/Search/Search';
+import Tab from '../../components/Tab/Tab';
 import globalStyle from '../../assets/styles/globalStyle';
 import style from './style';
 import {ScrollView} from 'react-native-gesture-handler';
+import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
 const Home = () => {
   const user = useSelector(state => state.user);
   // console.log(user); // from store.js
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.categories) 
+  const categories = useSelector(state => state.categories);
   //from store.js
   // console.log(categories)
   return (
@@ -94,6 +102,25 @@ const Home = () => {
             resizeMode="contain"
           />
         </Pressable>
+        <View style={style.categoryHeader}>
+          <Header title={'Select Category'} type={2}/>
+        </View>
+        <View style={style.categories}>
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={categories.categories}
+            renderItem={({item}) => (
+              <View style={style.categoryItem} key={item.categoryId}>
+                <Tab
+                  tabId={item.categoryId}
+                  onPress={value => dispatch(updateSelectedCategoryId(value))}
+                  title={item.name}
+                  isInactive={item.categoryId !== categories.selectedCategoryId}
+                />
+              </View>
+            )}></FlatList>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
