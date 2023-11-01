@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -29,54 +29,34 @@ const Home = () => {
   const categories = useSelector(state => state.categories);
   //from store.js
   // console.log(categories)
+
+  const [categoryPage, setCategoryPage] = useState(1);
+  const [categoryList, setCategoryList] = useState([]);
+  const [isLoadingCartegories, setIsLoadingCategories] = useState(false);
+  const categoryPageSize = 4;
+
+  useEffect(() => {
+    setIsLoadingCategories(true);
+    setCategoryList(
+      pagination(categories.categories, categoryPage, categoryPageSize),
+    );
+    setCategoryPage(prev => prev + 1);
+    setIsLoadingCategories(false);
+  }, []);
+
+  console.log(categoryList.length); // shows 4 and has 13 elements
+
+  const pagination = (items, currentPage, pageSize) => {
+    console.log(`Current Page is ${currentPage}`);
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    if (startIndex >= items.length) {
+      return [];
+    }
+    return items.slice(startIndex, endIndex);
+  };
+
   return (
-    // <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
-    //   <Header title={`${user.firstName} ${user.lastName}`} />
-    //   <Pressable
-    //     onPress={() => {
-    //       dispatch(updateFirstName({firstName: 'Roman'}));
-    //     }}>
-    //     <Text>Press to change first name</Text>
-    //   </Pressable>
-    //   {/* <Search
-    //     onSearch={value => {
-    //       console.log(value);
-    //     }}
-    //   /> */}
-    //   {/* <Header title={'Donation App'} type={1} /> */}
-    //   {/* <Header title={'Donation App'} type={2} />
-    //   <Header title={'Donation App'} type={3} /> */}
-    //   {/* <View style={{width: horizontalScale(130)}}>
-    //     <Tab title="Highlight" />
-    //   </View> */}
-    //   {/* <Tab title="Highlight" />
-    //   <Tab title="Highlight" isInactive={true} />
-    //   <Badge title={'Environment'} />
-    //   <FontAwesomeIcon icon={faSearch} /> */}
-    //   <View
-    //     style={{
-    //       flexDirection: 'row',
-    //       justifyContent: 'space-between',
-    //       paddingHorizontal: horizontalScale(24),
-    //     }}>
-    //     <SingleDonationItem
-    //       uri={
-    //         'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'
-    //       }
-    //       badgeTitle="Mexico"
-    //       donationTitle={'Tree Cactus'}
-    //       price={44}
-    //     />
-    //     <SingleDonationItem
-    //       uri={
-    //         'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'
-    //       }
-    //       badgeTitle="Environment"
-    //       donationTitle={'Home Cactus'}
-    //       price={39}
-    //     />
-    //   </View>
-    // </SafeAreaView>
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.header}>
@@ -103,13 +83,32 @@ const Home = () => {
           />
         </Pressable>
         <View style={style.categoryHeader}>
-          <Header title={'Select Category'} type={2}/>
+          <Header title={'Select Category'} type={2} />
         </View>
         <View style={style.categories}>
           <FlatList
+            onEndReachedThreshold={0.5}
+            onEndReached={() => {
+              if (isLoadingCartegories) return;
+              console.log(
+                'User has reached the end  Fetching page number',
+                categoryPage,
+              );
+              setIsLoadingCategories(true);
+              let newData = pagination(
+                categories.categories,
+                categoryPage,
+                categoryPageSize,
+              );
+              if (newData.length > 0) {
+                setCategoryList(prevState => [...prevState, ...newData]);
+                setCategoryPage(prevState => prevState + 1);
+              }
+              setIsLoadingCategories(false);
+            }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={categories.categories}
+            data={categoryList}
             renderItem={({item}) => (
               <View style={style.categoryItem} key={item.categoryId}>
                 <Tab
@@ -127,3 +126,51 @@ const Home = () => {
 };
 
 export default Home;
+
+// <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+//   <Header title={`${user.firstName} ${user.lastName}`} />
+//   <Pressable
+//     onPress={() => {
+//       dispatch(updateFirstName({firstName: 'Roman'}));
+//     }}>
+//     <Text>Press to change first name</Text>
+//   </Pressable>
+//   {/* <Search
+//     onSearch={value => {
+//       console.log(value);
+//     }}
+//   /> */}
+//   {/* <Header title={'Donation App'} type={1} /> */}
+//   {/* <Header title={'Donation App'} type={2} />
+//   <Header title={'Donation App'} type={3} /> */}
+//   {/* <View style={{width: horizontalScale(130)}}>
+//     <Tab title="Highlight" />
+//   </View> */}
+//   {/* <Tab title="Highlight" />
+//   <Tab title="Highlight" isInactive={true} />
+//   <Badge title={'Environment'} />
+//   <FontAwesomeIcon icon={faSearch} /> */}
+//   <View
+//     style={{
+//       flexDirection: 'row',
+//       justifyContent: 'space-between',
+//       paddingHorizontal: horizontalScale(24),
+//     }}>
+//     <SingleDonationItem
+//       uri={
+//         'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'
+//       }
+//       badgeTitle="Mexico"
+//       donationTitle={'Tree Cactus'}
+//       price={44}
+//     />
+//     <SingleDonationItem
+//       uri={
+//         'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'
+//       }
+//       badgeTitle="Environment"
+//       donationTitle={'Home Cactus'}
+//       price={39}
+//     />
+//   </View>
+// </SafeAreaView>
