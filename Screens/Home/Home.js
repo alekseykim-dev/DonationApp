@@ -32,14 +32,26 @@ const Home = () => {
   //from store.js
   // console.log(categories)
 
+  const [donationItems, setDonationItems] = useState([]);
   const [categoryPage, setCategoryPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const categoryPageSize = 4;
   // dispatch(resetDonations());
-  //reloads the store and dispatcehs the data  
-//Works the same as the persistor.purge()  in store.js
-  console.log('this is our current donations state', donations);
+  //reloads the store and dispatcehs the data
+  //Works the same as the persistor.purge()  in store.js
+
+  console.log(donationItems)
+  useEffect(() => {
+    console.log('Run category change function');
+    const items = donations.items.filter(value =>
+      value.categoryIds.includes(categories.selectedCategoryId),
+    );
+    setDonationItems(items)
+    // console.log(filteredItems); // shows only items that belong to 1 category
+  }, [categories.selectedCategoryId]);
+
+  // console.log('this is our current donations state', donations); // shows all the data about the category array
 
   useEffect(() => {
     setIsLoadingCategories(true);
