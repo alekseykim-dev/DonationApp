@@ -26,8 +26,9 @@ import {
   resetDonations,
   updateSelectedDonationId,
 } from '../../redux/reducers/Donations';
+import {Routes} from '../../navigation/Routes';
 
-const Home = () => {
+const Home = ({navigation}) => {
   // console.log(user); // from store.js
   const categories = useSelector(state => state.categories);
   const donations = useSelector(state => state.donations);
@@ -148,6 +149,8 @@ const Home = () => {
               <View key={value.donationItemId} style={style.singleDonationItem}>
                 <SingleDonationItem
                   onPress={selectedDonationId => {
+                    dispatch(updateSelectedDonationId(selectedDonationId));
+                    navigation.navigate(Routes.SingleDonationItem);
                     // console.log(selectedDonationId); shows the item's number
                   }}
                   uri={value.image}
