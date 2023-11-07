@@ -22,7 +22,11 @@ import globalStyle from '../../assets/styles/globalStyle';
 import style from './style';
 import {ScrollView} from 'react-native-gesture-handler';
 import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
-import {resetDonations} from '../../redux/reducers/Donations';
+import {
+  resetDonations,
+  updateSelectedDonationId,
+} from '../../redux/reducers/Donations';
+
 const Home = () => {
   // console.log(user); // from store.js
   const categories = useSelector(state => state.categories);
@@ -41,13 +45,13 @@ const Home = () => {
   //reloads the store and dispatcehs the data
   //Works the same as the persistor.purge()  in store.js
 
-  console.log(donationItems)
+  console.log(donationItems);
   useEffect(() => {
     console.log('Run category change function');
     const items = donations.items.filter(value =>
       value.categoryIds.includes(categories.selectedCategoryId),
     );
-    setDonationItems(items)
+    setDonationItems(items);
     // console.log(filteredItems); // shows only items that belong to 1 category
   }, [categories.selectedCategoryId]);
 
@@ -138,6 +142,27 @@ const Home = () => {
               </View>
             )}></FlatList>
         </View>
+        {donationItems.length > 0 && (
+          <View style={style.donationItemContainer}>
+            {donationItems.map(value => (
+              <SingleDonationItem
+                onPress={selectedDonationId => {
+                  // console.log(selectedDonationId); shows the item's number
+                }}
+                uri={value.image}
+                donationItemId={value.donationItemId}
+                donationTitle={value.name}
+                key={value.donationItemId}
+                price={parseFloat(value.price)}
+                badgeTitle={
+                  categories.categories.filter(
+                    val => val.categoryId === categories.selectedCategoryId,
+                  )[0].name
+                }
+              />
+            ))}
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
