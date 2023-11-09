@@ -18,7 +18,7 @@ const Input = props => {
           setValue(val);
           props.onChangeText(val);
         }}
-        secureTextEntry={true}
+        secureTextEntry={props.secureTextEntry}
       />
     </View>
   );
