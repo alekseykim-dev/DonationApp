@@ -1,25 +1,27 @@
 import React, {useState} from 'react';
 import {SafeAreaView, ScrollView, View, Pressable} from 'react-native';
-
+import {Routes} from '../../navigation/Routes';
 import style from './style';
 import globalStyle from '../../assets/styles/globalStyle';
 import Input from '../../components/Input/Input';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
-import {Routes} from '../../navigation/Routes';
-
-const Login = ({navigation}) => {
+import BackButton from '../../components/BackButton/BackButton';
+const Registration = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   //console.log(email) // shows the input in the console
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+      <View>
+        <BackButton onPress={() => navigation.goBack()} />
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={style.container}>
         <View style={globalStyle.marginBottom24}>
-          <Header type={1} title={'Welcome Back'} />
+          <Header type={1} title={'Hello and Welcome!'} />
         </View>
         <View style={globalStyle.marginBottom24}>
           <Input
@@ -39,16 +41,11 @@ const Login = ({navigation}) => {
           />
         </View>
         <View style={globalStyle.marginBottom24}>
-          <Button title="Login" />
+          <Button title="Registration" />
         </View>
-        <Pressable
-          style={style.registrationButton}
-          onPress={() => navigation.navigate(Routes.Registration)}>
-          <Header color={'#156CF7'} type={3} title={"Don't have an account?"} />
-        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Login;
+export default Registration;
