@@ -8,11 +8,14 @@ import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import {Routes} from '../../navigation/Routes';
 import {loginUser} from '../../api/user';
+import {useDispatch} from 'react-redux';
+import {logIn} from '../../redux/reducers/User';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
 
   //console.log(email) // shows the input in the console
   return (
@@ -49,6 +52,7 @@ const Login = ({navigation}) => {
                 setError(user.error);
               } else {
                 setError('');
+                dispatch(logIn(user.data));
                 navigation.navigate(Routes.Home);
               }
             }}

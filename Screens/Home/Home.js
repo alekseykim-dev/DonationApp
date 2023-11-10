@@ -46,7 +46,7 @@ const Home = ({navigation}) => {
   //reloads the store and dispatcehs the data
   //Works the same as the persistor.purge()  in store.js
 
-  console.log(donationItems);
+  // console.log(donationItems);
   useEffect(() => {
     console.log('Run category change function');
     const items = donations.items.filter(value =>
@@ -86,7 +86,7 @@ const Home = ({navigation}) => {
           <View>
             <Text style={style.headerIntroText}>Hello,</Text>
             <View style={style.userName}>
-              <Header title={`${user.firstName} ${user.lastName[0]}.👋`} />
+              <Header title={`${user.displayName} 👋`} />
             </View>
           </View>
           <Image
