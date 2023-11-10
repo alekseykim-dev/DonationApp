@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, View, Pressable} from 'react-native';
+import {SafeAreaView, ScrollView, View, Pressable, Text} from 'react-native';
 import {Routes} from '../../navigation/Routes';
 import style from './style';
 import globalStyle from '../../assets/styles/globalStyle';
@@ -12,7 +12,8 @@ const Registration = ({navigation}) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
   //console.log(email) // shows the input in the console
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
@@ -50,11 +51,25 @@ const Registration = ({navigation}) => {
             placeholder={'******'}
             onChangeText={value => setPassword(value)}
           />
+          {error.length > 0 && <Text style={style.error}>{error}</Text>}
+          {success.length > 0 && <Text style={style.success}>{success}</Text>}
         </View>
         <View style={globalStyle.marginBottom24}>
           <Button
+            isDisabled={
+              fullName.length <= 2 || email.length <= 5 || password.length <= 6
+            }
             title="Registration"
-            onPress={async () => await createUser(fullName, email, password)}
+            onPress={async () => {
+              let user = await createUser(fullName, email, password);
+              if (user.err) {
+                setError(user.err);
+              } else {
+                setError('');
+                setSuccess('You have successfully registered');
+                setTimeout(() => navigation.goBack(), 3000);
+              }
+            }}
           />
         </View>
       </ScrollView>

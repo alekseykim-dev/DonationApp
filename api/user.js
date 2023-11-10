@@ -8,11 +8,10 @@ export const createUser = async (fullName, email, password) => {
     return user;
   } catch (err) {
     if (err.code === 'auth/email-already-in-use') {
-      console.log('That email address is already in use!');
+      return {err: 'The email you entered is already in use'};
     } else if (err.code === 'auth/invalid-email') {
-      console.log('That email address is invalid');
+      return {err: 'Please enter a valid email address'};
     }
-    console.log(err);
+    return {err: 'Something went wrong with your request'};
   }
 };
-
