@@ -59,7 +59,7 @@ const Registration = ({navigation}) => {
             isDisabled={
               fullName.length <= 2 || email.length <= 5 || password.length <= 6
             }
-            title="Registration"
+            title="Signup"
             onPress={async () => {
               let user = await createUser(fullName, email, password);
               if (user.err) {
