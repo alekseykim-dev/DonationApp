@@ -62,8 +62,8 @@ const Registration = ({navigation}) => {
             title="Signup"
             onPress={async () => {
               let user = await createUser(fullName, email, password);
-              if (user.err) {
-                setError(user.err);
+              if (user.error) {
+                setError(user.error);
               } else {
                 setError('');
                 setSuccess('You have successfully registered');
