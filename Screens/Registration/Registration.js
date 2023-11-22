@@ -57,7 +57,7 @@ const Registration = ({navigation}) => {
         <View style={globalStyle.marginBottom24}>
           <Button
             isDisabled={
-              fullName.length <= 2 || email.length <= 5 || password.length <= 6
+              fullName.length <= 2 || email.length <= 5 || password.length < 6
             }
             title="Signup"
             onPress={async () => {

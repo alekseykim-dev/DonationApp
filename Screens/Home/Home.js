@@ -27,6 +27,7 @@ import {
   updateSelectedDonationId,
 } from '../../redux/reducers/Donations';
 import {Routes} from '../../navigation/Routes';
+import Map from '../../components/Map/Map';
 
 const Home = ({navigation}) => {
   // console.log(user); // from store.js
@@ -98,6 +99,8 @@ const Home = ({navigation}) => {
         <View style={style.searchBox}>
           <Search />
         </View>
+        <Map />
+
         <Pressable style={style.highlightedImageContainer}>
           <Image
             style={style.highlightedImage}

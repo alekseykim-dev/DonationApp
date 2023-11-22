@@ -57,7 +57,7 @@ const Login = ({navigation}) => {
               }
             }}
             title="Login"
-            isDisabled={email.length < 5 || password.length < 6}
+            isDisabled={email.length <= 5 || password.length < 6}
           />
         </View>
         <Pressable
