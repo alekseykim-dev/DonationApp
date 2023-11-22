@@ -4,55 +4,55 @@ const initialState = {
   categories: [
     {
       categoryId: 1,
-      name: 'Highlight',
+      name: '강남구',
     },
     {
       categoryId: 2,
-      name: 'Environment',
+      name: '강동구',
     },
     {
       categoryId: 3,
-      name: 'Education',
+      name: '용산구',
     },
     {
       categoryId: 4,
-      name: 'Clothing and Accessories',
+      name: '은평구',
     },
     {
       categoryId: 5,
-      name: 'Household goods',
+      name: '동작구',
     },
     {
       categoryId: 6,
-      name: 'Electronics',
+      name: '동대문구',
     },
     {
       categoryId: 7,
-      name: 'Toys and Games',
+      name: '도봉구',
     },
     {
       categoryId: 8,
-      name: 'Sports Equipment',
+      name: '강서구',
     },
     {
       categoryId: 9,
-      name: 'Books and Media',
+      name: '금천구',
     },
     {
       categoryId: 10,
-      name: 'Health and Beauty Products',
+      name: '마포구',
     },
     {
       categoryId: 11,
-      name: 'Office supplies',
+      name: '노원구',
     },
     {
       categoryId: 12,
-      name: 'Tools and Hardware',
+      name: '서초구',
     },
     {
       categoryId: 13,
-      name: 'Art and Craft Supplies',
+      name: '송파구',
     },
   ],
   selectedCategoryId: 1,

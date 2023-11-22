@@ -32,7 +32,7 @@ const SingleDonationItem = ({navigation, route}) => {
         </Text>
       </ScrollView>
       <View style={style.button}>
-        <Button title={'Donate'} />
+        <Button title={'커핀패스 구독하기'} />
       </View>
     </SafeAreaView>
   );

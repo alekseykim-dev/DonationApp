@@ -29,11 +29,7 @@ const SingleDonationItem = props => {
           numberOfLines={1}
         />
         <View style={style.price}>
-          <Header
-            title={`$${props.price.toFixed(2)}`}
-            type={3}
-            color={'#156CF7'}
-          />
+          <Header title={`₩${props.price}`} type={3} color={'#156CF7'} />
         </View>
       </View>
     </Pressable>
@@ -48,7 +44,7 @@ SingleDonationItem.propTypes = {
   uri: PropTypes.string.isRequired,
   badgeTitle: PropTypes.string.isRequired,
   donationTitle: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   onPress: PropTypes.func,
 };
 export default SingleDonationItem;

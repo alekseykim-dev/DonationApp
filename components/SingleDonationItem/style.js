@@ -3,9 +3,10 @@ import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
 
 const style = StyleSheet.create({
   image: {
-    width: horizontalScale(140),
-    height: verticalScale(170),
-    borderRadius: horizontalScale(20)
+    width: horizontalScale(300),
+    height: verticalScale(280),
+    borderRadius: horizontalScale(25),
+    //store width
   },
   badge: {
     position: 'absolute',

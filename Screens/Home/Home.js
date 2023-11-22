@@ -1,4 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import 'react-native-gesture-handler';
+import React, {useEffect, useRef, useState} from 'react';
+import NaverMapView, {
+  Align,
+  Marker,
+  Path,
+  Polyline,
+  Circle,
+  Polygon,
+} from '../../components/Map';
+import {PermissionsAndroid, Platform, TouchableOpacity} from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {LayerGroup} from '../../components/map/index';
 import {
   Pressable,
   SafeAreaView,
@@ -25,7 +40,7 @@ import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
 import {
   resetDonations,
   updateSelectedDonationId,
-} from '../../redux/reducers/Donations';
+} from '../../redux/reducers/CoffeeShops';
 import {Routes} from '../../navigation/Routes';
 import Map from '../../components/Map/Map';
 
@@ -37,6 +52,58 @@ const Home = ({navigation}) => {
   const dispatch = useDispatch();
   //from store.js
   // console.log(categories)
+  const mapView = useRef(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [permissionGranted, setPermissionGranted] = useState(false);
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      requestLocationPermission();
+    } else {
+      // For iOS, set permission to true as it's handled at the system level
+      setPermissionGranted(true);
+      fetchLocation();
+    }
+  }, []);
+
+  async function requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message:
+            'This app needs access to your location to show it on the map.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        setPermissionGranted(true);
+        fetchLocation();
+      } else {
+        console.log('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
+  const fetchLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setCurrentLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        console.log(position.coords);
+      },
+      error => {
+        console.error(error);
+      },
+      {enableHighAccuracy: false, timeout: 30000, maximumAge: 10000},
+    );
+  };
 
   const [donationItems, setDonationItems] = useState([]);
   const [categoryPage, setCategoryPage] = useState(1);
@@ -90,26 +157,35 @@ const Home = ({navigation}) => {
               <Header title={`${user.displayName} 👋`} />
             </View>
           </View>
-          <Image
+          <Search />
+          {/* <Image
             source={{uri: user.profileImage}}
             style={style.profileImage}
             resize={'contain'}
-          />
+          /> */}
         </View>
-        <View style={style.searchBox}>
+        {/* <View style={style.searchBox}>
           <Search />
-        </View>
-        <Map />
+        </View> */}
+        <NaverMapView
+          ref={mapView}
+          style={style.map}
+          showsMyLocationButton={permissionGranted}
+          center={currentLocation ? {...currentLocation, zoom: 16} : undefined}
+          useTextureView>
+          {currentLocation && <Marker coordinate={currentLocation} />}
+          {/* ... other map elements */}
+        </NaverMapView>
 
-        <Pressable style={style.highlightedImageContainer}>
+        {/* <Pressable style={style.highlightedImageContainer}>
           <Image
             style={style.highlightedImage}
             source={require('../../assets/images/highlighted_image.png')}
             resizeMode="contain"
           />
-        </Pressable>
+        </Pressable> */}
         <View style={style.categoryHeader}>
-          <Header title={'Select Category'} type={2} />
+          {/* <Header title={'Select area'} type={2} /> */}
         </View>
         <View style={style.categories}>
           <FlatList
@@ -144,35 +220,38 @@ const Home = ({navigation}) => {
                   isInactive={item.categoryId !== categories.selectedCategoryId}
                 />
               </View>
-            )}></FlatList>
+            )}
+          />
         </View>
         {donationItems.length > 0 && (
           <View style={style.donationItemContainer}>
-            {donationItems.map(value => {
-              const categoryInformation = categories.categories.find(
-                val => val.categoryId === categories.selectedCategoryId,
-              );
-              return (
-                <View
-                  key={value.donationItemId}
-                  style={style.singleDonationItem}>
-                  <SingleDonationItem
-                    onPress={selectedDonationId => {
-                      dispatch(updateSelectedDonationId(selectedDonationId));
-                      navigation.navigate(Routes.SingleDonationItem, {
-                        categoryInformation,
-                      });
-                      // console.log(selectedDonationId); shows the item's number
-                    }}
-                    uri={value.image}
-                    donationItemId={value.donationItemId}
-                    donationTitle={value.name}
-                    price={parseFloat(value.price)}
-                    badgeTitle={categoryInformation.name}
-                  />
-                </View>
-              );
-            })}
+            <View>
+              {donationItems.map(value => {
+                const categoryInformation = categories.categories.find(
+                  val => val.categoryId === categories.selectedCategoryId,
+                );
+                return (
+                  <View
+                    key={value.donationItemId}
+                    style={style.singleDonationItem}>
+                    <SingleDonationItem
+                      onPress={selectedDonationId => {
+                        dispatch(updateSelectedDonationId(selectedDonationId));
+                        navigation.navigate(Routes.SingleDonationItem, {
+                          categoryInformation,
+                        });
+                        // console.log(selectedDonationId); shows the item's number
+                      }}
+                      uri={value.image}
+                      donationItemId={value.donationItemId}
+                      donationTitle={value.name}
+                      price={value.price}
+                      badgeTitle={categoryInformation.name}
+                    />
+                  </View>
+                );
+              })}
+            </View>
           </View>
         )}
       </ScrollView>

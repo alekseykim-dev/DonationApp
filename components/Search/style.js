@@ -16,7 +16,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: horizontalScale(16),
-    backgroundColor: '#F3F5F9',
+    backgroundColor: 'transparent',
     height: 50,
     borderRadius: horizontalScale(10)
   },
