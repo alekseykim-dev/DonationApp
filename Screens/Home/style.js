@@ -72,7 +72,7 @@ const style = StyleSheet.create({
   map: {
     // marginTop: verticalScale(5),
     width: '100%',
-    height: verticalScale(350),
+    height: verticalScale(400),
   },
 });
 

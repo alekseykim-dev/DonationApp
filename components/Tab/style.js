@@ -4,7 +4,7 @@ import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
 
 const style = StyleSheet.create({
   tab: {
-    backgroundColor: '#2979F2',
+    backgroundColor: '#160696',
     height: verticalScale(50),
     justifyContent: 'center',
     borderRadius: horizontalScale(50),

@@ -16,7 +16,7 @@ const style = StyleSheet.create({
   },
   donationInformation: {
     marginTop: verticalScale(16),
-    marginHorizontal: horizontalScale(17)
+    marginHorizontal: horizontalScale(17),
   },
   price: {
     flexDirection: 'row',
