@@ -16,10 +16,11 @@ const Search = props => {
     props.onSearch(searchValue);
   };
   return (
-    <Pressable style={style.searchInputContainer} onPress={handleFocus}>
-      <FontAwesomeIcon color={'#25C0FF'} size={22} icon={faSearch} />
+    // <Pressable style={style.searchInputContainer} onPress=
+    <Pressable onPress={handleFocus}>
+      <FontAwesomeIcon size={22} icon={faSearch} />
       <TextInput
-        placeholder={props.placeholder}
+        // placeholder={props.placeholder}
         ref={textInputRef}
         style={style.searchInput}
         value={search}

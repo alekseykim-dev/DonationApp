@@ -16,9 +16,13 @@ const style = StyleSheet.create({
   },
   donationInformation: {
     marginTop: verticalScale(16),
+    marginHorizontal: horizontalScale(17)
   },
   price: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: verticalScale(5),
+    // marginHorizontal: horizontalScale(20)
   },
 });
 

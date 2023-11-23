@@ -8,8 +8,8 @@ import Badge from '../../components/Badge/Badge';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 
-const SingleDonationItem = ({navigation, route}) => {
-  const donationItemInformation = useSelector(
+const SingleCoffeeShop = ({navigation, route}) => {
+  const CoffeeShopInformation = useSelector(
     state => state.donations.selectedDonationInformation,
   );
   const categoryInformation = route.params.categoryInformation;
@@ -20,15 +20,15 @@ const SingleDonationItem = ({navigation, route}) => {
       <ScrollView showsVerticalScrollIndicator={false} style={style.container}>
         <BackButton onPress={() => navigation.goBack()} />
         <Image
-          source={{uri: donationItemInformation.image}}
+          source={{uri: CoffeeShopInformation.image}}
           style={style.image}
         />
         <View style={style.badge}>
           <Badge title={categoryInformation.name} />
         </View>
-        <Header type={1} title={donationItemInformation.name} />
+        <Header type={1} title={CoffeeShopInformation.name} />
         <Text style={style.description}>
-          {donationItemInformation.description}
+          {CoffeeShopInformation.description}
         </Text>
       </ScrollView>
       <View style={style.button}>
@@ -38,4 +38,4 @@ const SingleDonationItem = ({navigation, route}) => {
   );
 };
 
-export default SingleDonationItem;
+export default SingleCoffeeShop;

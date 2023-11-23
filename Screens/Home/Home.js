@@ -27,7 +27,7 @@ import Badge from '../../components/Badge/Badge';
 import {horizontalScale} from '../../assets/styles/scaling';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import SingleDonationItem from '../../components/SingleDonationItem/SingleDonationItem';
+import SingleCoffeeShop from '../../components/SingleCoffeeShop/SingleCoffeeShop';
 import {useSelector, useDispatch} from 'react-redux';
 import {resetToInitialState, updateFirstName} from '../../redux/reducers/User';
 import Header from '../../components/Header/Header';
@@ -42,12 +42,13 @@ import {
   updateSelectedDonationId,
 } from '../../redux/reducers/CoffeeShops';
 import {Routes} from '../../navigation/Routes';
-import Map from '../../components/Map/Map';
+import Map from '../../components/Map/MapWeb';
+import {faBell} from '@fortawesome/free-regular-svg-icons';
 
 const Home = ({navigation}) => {
   // console.log(user); // from store.js
   const categories = useSelector(state => state.categories);
-  const donations = useSelector(state => state.donations);
+  const shops = useSelector(state => state.donations);
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   //from store.js
@@ -105,7 +106,7 @@ const Home = ({navigation}) => {
     );
   };
 
-  const [donationItems, setDonationItems] = useState([]);
+  const [coffeeShop, setCoffeeShop] = useState([]);
   const [categoryPage, setCategoryPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
@@ -117,10 +118,10 @@ const Home = ({navigation}) => {
   // console.log(donationItems);
   useEffect(() => {
     console.log('Run category change function');
-    const items = donations.items.filter(value =>
+    const items = shops.items.filter(value =>
       value.categoryIds.includes(categories.selectedCategoryId),
     );
-    setDonationItems(items);
+    setCoffeeShop(items);
     // console.log(filteredItems); // shows only items that belong to 1 category
   }, [categories.selectedCategoryId]);
 
@@ -152,17 +153,30 @@ const Home = ({navigation}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.header}>
           <View>
-            <Text style={style.headerIntroText}>Hello,</Text>
-            <View style={style.userName}>
-              <Header title={`${user.displayName} 👋`} />
-            </View>
+            <Text style={style.headerIntroText}>CUPiN</Text>
+            {/* <View style={style.userName}>
+              <Header title={`Hi ${user.displayName} 👋`}> </Header>
+            </View> */}
           </View>
-          <Search />
+
           {/* <Image
             source={{uri: user.profileImage}}
             style={style.profileImage}
             resize={'contain'}
           /> */}
+          <View style={{flexDirection: 'row'}}>
+            <FontAwesomeIcon
+              icon={faBell}
+              size={22}
+              style={{marginRight: 20}}
+            />
+            <Search />
+          </View>
+        </View>
+        <View>
+          <Text style={style.mapDesc}>
+            내 주변 구독 가능한 카페를 찾아보세요
+          </Text>
         </View>
         {/* <View style={style.searchBox}>
           <Search />
@@ -171,7 +185,7 @@ const Home = ({navigation}) => {
           ref={mapView}
           style={style.map}
           showsMyLocationButton={permissionGranted}
-          center={currentLocation ? {...currentLocation, zoom: 16} : undefined}
+          center={currentLocation ? {...currentLocation, zoom: 15} : undefined}
           useTextureView>
           {currentLocation && <Marker coordinate={currentLocation} />}
           {/* ... other map elements */}
@@ -193,7 +207,7 @@ const Home = ({navigation}) => {
             onEndReached={() => {
               if (isLoadingCategories) return;
               console.log(
-                'User has reached the end  Fetching page number',
+                'User has reached the end. Fetching page number',
                 categoryPage,
               );
               setIsLoadingCategories(true);
@@ -223,10 +237,10 @@ const Home = ({navigation}) => {
             )}
           />
         </View>
-        {donationItems.length > 0 && (
-          <View style={style.donationItemContainer}>
+        {coffeeShop.length > 0 && (
+          <View style={style.coffeeShopContainer}>
             <View>
-              {donationItems.map(value => {
+              {coffeeShop.map(value => {
                 const categoryInformation = categories.categories.find(
                   val => val.categoryId === categories.selectedCategoryId,
                 );
@@ -234,10 +248,12 @@ const Home = ({navigation}) => {
                   <View
                     key={value.donationItemId}
                     style={style.singleDonationItem}>
-                    <SingleDonationItem
-                      onPress={selectedDonationId => {
-                        dispatch(updateSelectedDonationId(selectedDonationId));
-                        navigation.navigate(Routes.SingleDonationItem, {
+                    <SingleCoffeeShop
+                      onPress={selectedCoffeeShopId => {
+                        dispatch(
+                          updateSelectedDonationId(selectedCoffeeShopId),
+                        );
+                        navigation.navigate(Routes.SingleCoffeeShop, {
                           categoryInformation,
                         });
                         // console.log(selectedDonationId); shows the item's number
@@ -246,6 +262,7 @@ const Home = ({navigation}) => {
                       donationItemId={value.donationItemId}
                       donationTitle={value.name}
                       price={value.price}
+                      quantity={value.quantity}
                       badgeTitle={categoryInformation.name}
                     />
                   </View>

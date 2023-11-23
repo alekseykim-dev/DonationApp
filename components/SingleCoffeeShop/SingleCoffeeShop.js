@@ -5,7 +5,7 @@ import {Pressable, Image, View} from 'react-native';
 import Header from '../Header/Header';
 import Badge from '../Badge/Badge';
 
-const SingleDonationItem = props => {
+const SingleCoffeeShop = props => {
   return (
     <Pressable
       onPress={() => {
@@ -24,27 +24,33 @@ const SingleDonationItem = props => {
       <View style={style.donationInformation}>
         <Header
           title={props.donationTitle}
-          type={3}
+          type={2}
           color={'#0A043C'}
           numberOfLines={1}
         />
         <View style={style.price}>
-          <Header title={`₩${props.price}`} type={3} color={'#156CF7'} />
+          <Header title={`${props.price} 원`} type={3} color={'#8B0000'} />
+          <Header
+            title={`${props.quantity}장 남음`}
+            type={3}
+            color={'#8B0000'}
+          />
         </View>
       </View>
     </Pressable>
   );
 };
 
-SingleDonationItem.defaultProps = {
+SingleCoffeeShop.defaultProps = {
   onPress: () => {},
 };
-SingleDonationItem.propTypes = {
+SingleCoffeeShop.propTypes = {
   donationItemId: PropTypes.number.isRequired,
   uri: PropTypes.string.isRequired,
   badgeTitle: PropTypes.string.isRequired,
   donationTitle: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
   onPress: PropTypes.func,
 };
-export default SingleDonationItem;
+export default SingleCoffeeShop;
