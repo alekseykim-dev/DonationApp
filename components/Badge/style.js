@@ -4,7 +4,7 @@ import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
 
 const style = StyleSheet.create({
   badge: {
-    backgroundColor: '#fff',
+    backgroundColor: '#8B0000',
     height: verticalScale(22),
     justifyContent: 'center',
     borderRadius: horizontalScale(50),
@@ -14,7 +14,7 @@ const style = StyleSheet.create({
     fontSize: 10,
     fontWeight: '600',
     lineHeight: 12,
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
   },
 });

@@ -6,7 +6,7 @@ const style = StyleSheet.create({
     // borderWidth: 1,
     flex: 1,
     marginLeft: horizontalScale(6),
-    height: '100%',
+    // height: '100%',
     fontFamily: 'Inter',
     fontSize: 14,
     lineHeight: 14,

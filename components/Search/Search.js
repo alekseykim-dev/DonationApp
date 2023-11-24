@@ -19,13 +19,13 @@ const Search = props => {
     // <Pressable style={style.searchInputContainer} onPress=
     <Pressable onPress={handleFocus}>
       <FontAwesomeIcon size={22} icon={faSearch} />
-      <TextInput
+      {/* <TextInput
         // placeholder={props.placeholder}
         ref={textInputRef}
         style={style.searchInput}
         value={search}
         onChangeText={value => handleSearch(value)}
-      />
+      /> */}
     </Pressable>
   );
 };

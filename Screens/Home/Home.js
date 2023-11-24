@@ -164,7 +164,7 @@ const Home = ({navigation}) => {
             style={style.profileImage}
             resize={'contain'}
           /> */}
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <FontAwesomeIcon
               icon={faBell}
               size={22}

@@ -4,10 +4,10 @@ import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
 
 const style = StyleSheet.create({
   button: {
-    backgroundColor: '#2979F2',
+    backgroundColor: '#8B0000',
     height: verticalScale(55),
     justifyContent: 'center',
-    borderRadius: horizontalScale(50),
+    borderRadius: horizontalScale(10),
   },
   title: {
     fontFamily: 'Inter',
