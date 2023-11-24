@@ -5,7 +5,7 @@ import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
 const style = StyleSheet.create({
   button: {
     backgroundColor: '#8B0000',
-    height: verticalScale(55),
+    height: verticalScale(50),
     justifyContent: 'center',
     borderRadius: horizontalScale(10),
   },
