@@ -215,9 +215,21 @@ const Home = ({navigation}) => {
           showsMyLocationButton={permissionGranted}
           center={currentLocation ? {...currentLocation, zoom: 15} : undefined}
           useTextureView>
-          {currentLocation && <Marker coordinate={currentLocation} />}
+          {currentLocation && (
+            <Marker
+              coordinate={currentLocation}
+              image={require('../../assets/images/marker_naver.png')}
+              width={40}
+              height={40}
+              pinColor="black"
+            />
+          )}
           {markers.map(marker => (
             <Marker
+              image={require('../../assets/images/marker_naver.png')}
+              width={40}
+              height={40}
+              pinColor="black"
               key={marker.id}
               coordinate={marker.coordinate}
               onClick={() => {
