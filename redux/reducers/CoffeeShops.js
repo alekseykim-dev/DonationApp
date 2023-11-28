@@ -11,6 +11,7 @@ const initialState = {
       categoryIds: [1, 2],
       price: `40,000`,
       quantity: 21,
+      coordinate: {latitude: 37.5665, longitude: 126.978},
     },
     {
       name: 'Espressivo',
@@ -21,6 +22,7 @@ const initialState = {
       categoryIds: [1, 3],
       price: '35,000',
       quantity: 17,
+      coordinate: {latitude: 37.579617, longitude: 126.977041},
     },
     {
       name: 'Java Jewel',
@@ -31,6 +33,7 @@ const initialState = {
       categoryIds: [4],
       price: '39,000',
       quantity: 61,
+      coordinate: {latitude: 37.551169, longitude: 126.988227},
     },
     {
       name: 'Aromatica',
@@ -41,6 +44,7 @@ const initialState = {
       categoryIds: [1, 5],
       price: '43,000',
       quantity: 42,
+      coordinate: {latitude: 37.582889, longitude: 126.983611},
     },
     {
       name: 'Brewtopia',
@@ -51,6 +55,7 @@ const initialState = {
       categoryIds: [6, 3],
       price: '44,000',
       quantity: 7,
+      coordinate: {latitude: 37.566836, longitude: 127.008912},
     },
     {
       name: 'Nirvana',
@@ -61,6 +66,7 @@ const initialState = {
       categoryIds: [7],
       price: '56,000',
       quantity: 5,
+      coordinate: {latitude: 37.512672, longitude: 127.102543},
     },
     {
       name: 'Eclipse',
@@ -72,6 +78,7 @@ const initialState = {
       categoryIds: [8],
       price: '21,500',
       quantity: 12,
+      coordinate: {latitude: 37.563656, longitude: 126.985022},
     },
     {
       name: 'Ivory',
@@ -83,6 +90,7 @@ const initialState = {
       categoryIds: [1, 9],
       price: '53,000',
       quantity: 28,
+      coordinate: {latitude: 37.574368, longitude: 126.983612},
     },
     {
       name: 'Coco Java',
@@ -94,6 +102,7 @@ const initialState = {
       categoryIds: [10],
       price: '78,000',
       quantity: 26,
+      coordinate: {latitude: 37.569757, longitude: 126.977036},
     },
     {
       name: 'Whisper',
@@ -105,6 +114,7 @@ const initialState = {
       categoryIds: [11],
       price: '32,000',
       quantity: 23,
+      coordinate: {latitude: 37.509621, longitude: 126.99588},
     },
     {
       name: 'Rhapsody',
@@ -116,6 +126,7 @@ const initialState = {
       categoryIds: [1, 12],
       price: '43,000',
       quantity: 21,
+      coordinate: {latitude: 37.529722, longitude: 126.934444},
     },
     {
       name: 'Zephyr',
@@ -127,6 +138,7 @@ const initialState = {
       categoryIds: [13],
       price: '29,000',
       quantity: 15,
+      coordinate: {latitude: 37.57884, longitude: 126.991019},
     },
     {
       name: 'Eco-friendly water bottles',
@@ -138,6 +150,7 @@ const initialState = {
       categoryIds: [2],
       price: '27,000',
       quantity: 25,
+      coordinate: {latitude: 37.543072, longitude: 127.041808},
     },
     {
       name: 'Vista',
@@ -149,6 +162,7 @@ const initialState = {
       categoryIds: [1, 8],
       price: '38,000',
       quantity: 19,
+      coordinate: {latitude: 37.512075, longitude: 127.058745},
     },
     {
       name: 'Seraphina',
@@ -160,6 +174,7 @@ const initialState = {
       categoryIds: [2],
       price: '33,000',
       quantity: 11,
+      coordinate: {latitude: 37.536955, longitude: 126.977016},
     },
     {
       name: 'Talisman',
@@ -171,6 +186,7 @@ const initialState = {
       categoryIds: [4],
       price: '41,500',
       quantity: 13,
+      coordinate: {latitude: 37.523867, longitude: 126.980388},
     },
     {
       name: 'Sapphire',
@@ -182,6 +198,7 @@ const initialState = {
       categoryIds: [1, 5],
       price: '36,000',
       quantity: 16,
+      coordinate: {latitude: 37.559078, longitude: 126.977985},
     },
     {
       name: 'Mosaic',
@@ -193,6 +210,7 @@ const initialState = {
       categoryIds: [10],
       price: '41,000',
       quantity: 35,
+      coordinate: {latitude: 37.511211, longitude: 127.098153},
     },
     {
       name: 'Luxe',
@@ -204,6 +222,7 @@ const initialState = {
       categoryIds: [2, 12],
       price: '43,000',
       quantity: 25,
+      coordinate: {latitude: 37.557336, longitude: 126.925207},
     },
     {
       name: 'Pinnacle',
@@ -215,6 +234,7 @@ const initialState = {
       categoryIds: [9],
       price: '47,000',
       quantity: 15,
+      coordinate: {latitude: 37.530125, longitude: 126.932911},
     },
   ],
   selectedDonationId: null,

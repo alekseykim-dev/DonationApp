@@ -1,7 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {Routes} from './Routes';
 import Home from '../screens/Home/Home';
-import SingleCoffeeShop from '../screens/SingleDonationItem/SingleDonationItem';
+import SingleCoffeeShop from '../screens/SingleCoffeeshop/SingleCoffeeshop';
 import Login from '../screens/Login/Login';
 import Registration from '../screens/Registration/Registration';
 

@@ -46,6 +46,34 @@ import Map from '../../components/Map/MapWeb';
 import {faBell} from '@fortawesome/free-regular-svg-icons';
 
 const Home = ({navigation}) => {
+  const [markers, setMarkers] = useState([
+    {
+      id: 1,
+      coordinate: {latitude: 37.5665, longitude: 126.978},
+      title: 'Caffe Luxe',
+    },
+    {
+      id: 2,
+      coordinate: {latitude: 37.579617, longitude: 126.977041},
+      title: 'Espressivo',
+    },
+    // ... add the rest of your locations here
+    {
+      id: 10,
+      coordinate: {latitude: 37.509621, longitude: 126.99588},
+      title: 'Whisper',
+    },
+    {
+      id: 11,
+      coordinate: {latitude: 37.529722, longitude: 126.934444},
+      title: 'Rhapsody',
+    },
+  ]);
+
+  const onMarkerTap = markerData => {
+    alert(`Marker Tapped: ${markerData.title}`);
+    // Additional logic for marker tap can be added here
+  };
   // console.log(user); // from store.js
   const categories = useSelector(state => state.categories);
   const shops = useSelector(state => state.donations);
@@ -188,7 +216,39 @@ const Home = ({navigation}) => {
           center={currentLocation ? {...currentLocation, zoom: 15} : undefined}
           useTextureView>
           {currentLocation && <Marker coordinate={currentLocation} />}
-          {/* ... other map elements */}
+          {markers.map(marker => (
+            <Marker
+              key={marker.id}
+              coordinate={marker.coordinate}
+              onClick={() => {
+                // Debugging: Log the marker ID and check if this part is being executed
+                console.log(`Marker pressed: ID = ${marker.id}`);
+
+                // Find the coffee shop that matches the marker ID
+                const selectedCoffeeShop = shops.items.find(
+                  shop => shop.donationItemId === marker.id,
+                );
+
+                // Debugging: Log the selected coffee shop details
+                console.log('Selected Coffee Shop:', selectedCoffeeShop);
+
+                if (selectedCoffeeShop) {
+                  dispatch(updateSelectedDonationId(marker.id));
+                  navigation.navigate(Routes.SingleCoffeeShop, {
+                    categoryInformation: {
+                      ...selectedCoffeeShop,
+                      badgeTitle: selectedCoffeeShop.name, // assuming this is the correct field
+                    },
+                  });
+                } else {
+                  // Debugging: Log a message if no matching coffee shop is found
+                  console.log(
+                    `No matching coffee shop found for marker ID ${marker.id}`,
+                  );
+                }
+              }}
+            />
+          ))}
         </NaverMapView>
 
         {/* <Pressable style={style.highlightedImageContainer}>
@@ -256,6 +316,7 @@ const Home = ({navigation}) => {
                         navigation.navigate(Routes.SingleCoffeeShop, {
                           categoryInformation,
                         });
+                        console.log('pressed');
                         // console.log(selectedDonationId); shows the item's number
                       }}
                       uri={value.image}
