@@ -50,23 +50,123 @@ const Home = ({navigation}) => {
     {
       id: 1,
       coordinate: {latitude: 37.5665, longitude: 126.978},
+      quantity: 21,
       title: 'Caffe Luxe',
     },
     {
       id: 2,
       coordinate: {latitude: 37.579617, longitude: 126.977041},
+      quantity: 0,
       title: 'Espressivo',
+    },
+    {
+      id: 3,
+      coordinate: {latitude: 37.551169, longitude: 126.988227},
+      quantity: 61,
+      title: 'Java Jewel',
+    },
+    {
+      id: 4,
+      coordinate: {latitude: 37.582889, longitude: 126.983611},
+      quantity: 0,
+      title: 'Aromatica',
+    },
+    {
+      id: 5,
+      coordinate: {latitude: 37.566836, longitude: 127.008912},
+      quantity: 0,
+      title: 'Brewtopia',
+    },
+    {
+      id: 6,
+      coordinate: {latitude: 37.512672, longitude: 127.102543},
+      quantity: 0,
+      title: 'Nirvana',
+    },
+    {
+      id: 7,
+      coordinate: {latitude: 37.563656, longitude: 126.985022},
+      quantity: 0,
+      title: 'Eclipse',
+    },
+    {
+      id: 8,
+      coordinate: {latitude: 37.574368, longitude: 126.983612},
+      quantity: 0,
+      title: 'Ivory',
+    },
+    {
+      id: 9,
+      coordinate: {latitude: 37.569757, longitude: 126.977036},
+      quantity: 26,
+      title: 'Coco Java',
     },
     // ... add the rest of your locations here
     {
       id: 10,
       coordinate: {latitude: 37.509621, longitude: 126.99588},
+      quantity: 0,
       title: 'Whisper',
     },
     {
       id: 11,
       coordinate: {latitude: 37.529722, longitude: 126.934444},
+      quantity: 21,
       title: 'Rhapsody',
+    },
+    {
+      id: 12,
+      coordinate: {latitude: 37.57884, longitude: 126.991019},
+      quantity: 15,
+      title: 'Zephyr',
+    },
+    {
+      id: 13,
+      coordinate: {latitude: 37.543072, longitude: 127.041808},
+      quantity: 25,
+      title: 'Rizz Coffee',
+    },
+    {
+      id: 14,
+      coordinate: {latitude: 37.512075, longitude: 127.058745},
+      quantity: 19,
+      title: 'Vista',
+    },
+    {
+      id: 15,
+      coordinate: {latitude: 37.536955, longitude: 126.977016},
+      quantity: 11,
+      title: 'Seraphina',
+    },
+    {
+      id: 16,
+      coordinate: {latitude: 37.523867, longitude: 126.980388},
+      quantity: 0,
+      title: 'Talisman',
+    },
+    {
+      id: 17,
+      coordinate: {latitude: 37.559078, longitude: 126.977985},
+      quantity: 16,
+      title: 'Sapphire',
+    },
+    {
+      id: 18,
+      coordinate: {latitude: 37.511211, longitude: 127.098153},
+      quantity: 35,
+      title: 'Mosaic',
+    },
+    {
+      id: 19,
+      coordinate: {latitude: 37.557336, longitude: 126.925207},
+      quantity: 0,
+      title: 'Luxe',
+    },
+    {
+      id: 20,
+      coordinate: {latitude: 37.530125, longitude: 126.932911},
+      quantity: 15,
+      title: 'Pinnacle',
     },
   ]);
 
@@ -77,7 +177,7 @@ const Home = ({navigation}) => {
   // console.log(user); // from store.js
   const categories = useSelector(state => state.categories);
   const shops = useSelector(state => state.donations);
-  const user = useSelector(state => state.user);
+  // const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   //from store.js
   // console.log(categories)
@@ -218,7 +318,7 @@ const Home = ({navigation}) => {
           {currentLocation && (
             <Marker
               coordinate={currentLocation}
-              image={require('../../assets/images/marker_naver.png')}
+              image={require('../../assets/images/me.png')}
               width={40}
               height={40}
               pinColor="black"
@@ -226,7 +326,11 @@ const Home = ({navigation}) => {
           )}
           {markers.map(marker => (
             <Marker
-              image={require('../../assets/images/marker_naver.png')}
+              image={
+                marker.quantity < 1
+                  ? require('../../assets/images/marker_naver_no.png')
+                  : require('../../assets/images/marker_naver.png')
+              }
               width={40}
               height={40}
               pinColor="black"

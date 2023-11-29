@@ -21,7 +21,7 @@ const initialState = {
       donationItemId: 2,
       categoryIds: [1, 3],
       price: '35,000',
-      quantity: 17,
+      quantity: 0,
       coordinate: {latitude: 37.579617, longitude: 126.977041},
     },
     {
@@ -43,7 +43,7 @@ const initialState = {
       donationItemId: 4,
       categoryIds: [1, 5],
       price: '43,000',
-      quantity: 42,
+      quantity: 0,
       coordinate: {latitude: 37.582889, longitude: 126.983611},
     },
     {
@@ -54,7 +54,7 @@ const initialState = {
       donationItemId: 5,
       categoryIds: [6, 3],
       price: '44,000',
-      quantity: 7,
+      quantity: 0,
       coordinate: {latitude: 37.566836, longitude: 127.008912},
     },
     {
@@ -65,7 +65,7 @@ const initialState = {
       donationItemId: 6,
       categoryIds: [7],
       price: '56,000',
-      quantity: 5,
+      quantity: 0,
       coordinate: {latitude: 37.512672, longitude: 127.102543},
     },
     {
@@ -77,7 +77,7 @@ const initialState = {
       donationItemId: 7,
       categoryIds: [8],
       price: '21,500',
-      quantity: 12,
+      quantity: 0,
       coordinate: {latitude: 37.563656, longitude: 126.985022},
     },
     {
@@ -89,7 +89,7 @@ const initialState = {
       donationItemId: 8,
       categoryIds: [1, 9],
       price: '53,000',
-      quantity: 28,
+      quantity: 0,
       coordinate: {latitude: 37.574368, longitude: 126.983612},
     },
     {
@@ -113,7 +113,7 @@ const initialState = {
       donationItemId: 10,
       categoryIds: [11],
       price: '32,000',
-      quantity: 23,
+      quantity: 0,
       coordinate: {latitude: 37.509621, longitude: 126.99588},
     },
     {
@@ -141,7 +141,7 @@ const initialState = {
       coordinate: {latitude: 37.57884, longitude: 126.991019},
     },
     {
-      name: 'Eco-friendly water bottles',
+      name: 'Rizz Coffee',
       description:
         ' A tranquil oasis where the smoothness of lattes meets the serenity of a lagoon-like ambiance, ideal for peaceful coffee breaks.',
       image:
@@ -185,7 +185,7 @@ const initialState = {
       donationItemId: 16,
       categoryIds: [4],
       price: '41,500',
-      quantity: 13,
+      quantity: 0,
       coordinate: {latitude: 37.523867, longitude: 126.980388},
     },
     {
@@ -221,7 +221,7 @@ const initialState = {
       donationItemId: 19,
       categoryIds: [2, 12],
       price: '43,000',
-      quantity: 25,
+      quantity: 0,
       coordinate: {latitude: 37.557336, longitude: 126.925207},
     },
     {

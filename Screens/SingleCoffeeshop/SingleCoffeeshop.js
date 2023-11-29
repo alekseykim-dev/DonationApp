@@ -56,7 +56,11 @@ const SingleCoffeeShop = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
         <View style={style.buy}>
-          <Button title={'커핀패스 구독하기'} />
+          {CoffeeShopInformation.quantity < 1 ? (
+            <Button title="Out of Stock" isDisabled />
+          ) : (
+            <Button title="커핀패스 구독하기" />
+          )}
         </View>
       </View>
     </SafeAreaView>
