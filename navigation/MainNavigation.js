@@ -1,10 +1,9 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {Routes} from './Routes';
-import Home from '../screens/Home/Home';
-import SingleCoffeeShop from '../screens/SingleCoffeeshop/SingleCoffeeshop';
-import Login from '../screens/Login/Login';
-import Registration from '../screens/Registration/Registration';
-
+import Home from '../Screens/Home/Home';
+import SingleCoffeeShop from '../Screens/SingleCoffeeshop/SingleCoffeeshop';
+import Login from '../Screens/Login/Login';
+import Registration from '../Screens/Registration/Registration';
 
 const Stack = createStackNavigator();
 
