@@ -1,4 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import 'react-native-gesture-handler';
+import React, {useEffect, useRef, useState} from 'react';
+import NaverMapView, {
+  Align,
+  Marker,
+  Path,
+  Polyline,
+  Circle,
+  Polygon,
+} from '../../components/Map';
+import {PermissionsAndroid, Platform, TouchableOpacity} from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {LayerGroup} from '../../components/map/index';
 import {
   Pressable,
   SafeAreaView,
@@ -12,7 +27,7 @@ import Badge from '../../components/Badge/Badge';
 import {horizontalScale} from '../../assets/styles/scaling';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import SingleDonationItem from '../../components/SingleDonationItem/SingleDonationItem';
+import SingleCoffeeShop from '../../components/SingleCoffeeShop/SingleCoffeeShop';
 import {useSelector, useDispatch} from 'react-redux';
 import {resetToInitialState, updateFirstName} from '../../redux/reducers/User';
 import Header from '../../components/Header/Header';
@@ -25,19 +40,201 @@ import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
 import {
   resetDonations,
   updateSelectedDonationId,
-} from '../../redux/reducers/Donations';
+} from '../../redux/reducers/CoffeeShops';
 import {Routes} from '../../navigation/Routes';
+import Map from '../../components/Map/MapWeb';
+import {faBell} from '@fortawesome/free-regular-svg-icons';
 
 const Home = ({navigation}) => {
+  const [markers, setMarkers] = useState([
+    {
+      id: 1,
+      coordinate: {latitude: 37.5665, longitude: 126.978},
+      quantity: 21,
+      title: 'Caffe Luxe',
+    },
+    {
+      id: 2,
+      coordinate: {latitude: 37.579617, longitude: 126.977041},
+      quantity: 0,
+      title: 'Espressivo',
+    },
+    {
+      id: 3,
+      coordinate: {latitude: 37.551169, longitude: 126.988227},
+      quantity: 61,
+      title: 'Java Jewel',
+    },
+    {
+      id: 4,
+      coordinate: {latitude: 37.582889, longitude: 126.983611},
+      quantity: 0,
+      title: 'Aromatica',
+    },
+    {
+      id: 5,
+      coordinate: {latitude: 37.566836, longitude: 127.008912},
+      quantity: 0,
+      title: 'Brewtopia',
+    },
+    {
+      id: 6,
+      coordinate: {latitude: 37.512672, longitude: 127.102543},
+      quantity: 0,
+      title: 'Nirvana',
+    },
+    {
+      id: 7,
+      coordinate: {latitude: 37.563656, longitude: 126.985022},
+      quantity: 0,
+      title: 'Eclipse',
+    },
+    {
+      id: 8,
+      coordinate: {latitude: 37.574368, longitude: 126.983612},
+      quantity: 0,
+      title: 'Ivory',
+    },
+    {
+      id: 9,
+      coordinate: {latitude: 37.569757, longitude: 126.977036},
+      quantity: 26,
+      title: 'Coco Java',
+    },
+    // ... add the rest of your locations here
+    {
+      id: 10,
+      coordinate: {latitude: 37.509621, longitude: 126.99588},
+      quantity: 0,
+      title: 'Whisper',
+    },
+    {
+      id: 11,
+      coordinate: {latitude: 37.529722, longitude: 126.934444},
+      quantity: 21,
+      title: 'Rhapsody',
+    },
+    {
+      id: 12,
+      coordinate: {latitude: 37.57884, longitude: 126.991019},
+      quantity: 15,
+      title: 'Zephyr',
+    },
+    {
+      id: 13,
+      coordinate: {latitude: 37.543072, longitude: 127.041808},
+      quantity: 25,
+      title: 'Rizz Coffee',
+    },
+    {
+      id: 14,
+      coordinate: {latitude: 37.512075, longitude: 127.058745},
+      quantity: 19,
+      title: 'Vista',
+    },
+    {
+      id: 15,
+      coordinate: {latitude: 37.536955, longitude: 126.977016},
+      quantity: 11,
+      title: 'Seraphina',
+    },
+    {
+      id: 16,
+      coordinate: {latitude: 37.523867, longitude: 126.980388},
+      quantity: 0,
+      title: 'Talisman',
+    },
+    {
+      id: 17,
+      coordinate: {latitude: 37.559078, longitude: 126.977985},
+      quantity: 16,
+      title: 'Sapphire',
+    },
+    {
+      id: 18,
+      coordinate: {latitude: 37.511211, longitude: 127.098153},
+      quantity: 35,
+      title: 'Mosaic',
+    },
+    {
+      id: 19,
+      coordinate: {latitude: 37.557336, longitude: 126.925207},
+      quantity: 0,
+      title: 'Luxe',
+    },
+    {
+      id: 20,
+      coordinate: {latitude: 37.530125, longitude: 126.932911},
+      quantity: 15,
+      title: 'Pinnacle',
+    },
+  ]);
+
+  const onMarkerTap = markerData => {
+    alert(`Marker Tapped: ${markerData.title}`);
+    // Additional logic for marker tap can be added here
+  };
   // console.log(user); // from store.js
   const categories = useSelector(state => state.categories);
-  const donations = useSelector(state => state.donations);
-  const user = useSelector(state => state.user);
+  const shops = useSelector(state => state.donations);
+  // const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   //from store.js
   // console.log(categories)
+  const mapView = useRef(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [permissionGranted, setPermissionGranted] = useState(false);
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      requestLocationPermission();
+    } else {
+      // For iOS, set permission to true as it's handled at the system level
+      setPermissionGranted(true);
+      fetchLocation();
+    }
+  }, []);
 
-  const [donationItems, setDonationItems] = useState([]);
+  async function requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message:
+            'This app needs access to your location to show it on the map.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        setPermissionGranted(true);
+        fetchLocation();
+      } else {
+        console.log('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
+  const fetchLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setCurrentLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        console.log(position.coords);
+      },
+      error => {
+        console.error(error);
+      },
+      {enableHighAccuracy: false, timeout: 30000, maximumAge: 10000},
+    );
+  };
+
+  const [coffeeShop, setCoffeeShop] = useState([]);
   const [categoryPage, setCategoryPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
@@ -46,13 +243,13 @@ const Home = ({navigation}) => {
   //reloads the store and dispatcehs the data
   //Works the same as the persistor.purge()  in store.js
 
-  console.log(donationItems);
+  // console.log(donationItems);
   useEffect(() => {
     console.log('Run category change function');
-    const items = donations.items.filter(value =>
+    const items = shops.items.filter(value =>
       value.categoryIds.includes(categories.selectedCategoryId),
     );
-    setDonationItems(items);
+    setCoffeeShop(items);
     // console.log(filteredItems); // shows only items that belong to 1 category
   }, [categories.selectedCategoryId]);
 
@@ -84,29 +281,101 @@ const Home = ({navigation}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.header}>
           <View>
-            <Text style={style.headerIntroText}>Hello,</Text>
-            <View style={style.userName}>
-              <Header title={`${user.firstName} ${user.lastName[0]}.👋`} />
-            </View>
+            <Text style={style.headerIntroText}>CUPiN</Text>
+            {/* <View style={style.userName}>
+              <Header title={`Hi ${user.displayName} 👋`}> </Header>
+            </View> */}
           </View>
-          <Image
+
+          {/* <Image
             source={{uri: user.profileImage}}
             style={style.profileImage}
             resize={'contain'}
-          />
+          /> */}
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <FontAwesomeIcon
+              icon={faBell}
+              size={22}
+              style={{marginRight: 20}}
+            />
+            <Search />
+          </View>
         </View>
-        <View style={style.searchBox}>
+        <View>
+          <Text style={style.mapDesc}>
+            내 주변 구독 가능한 카페를 찾아보세요
+          </Text>
+        </View>
+        {/* <View style={style.searchBox}>
           <Search />
-        </View>
-        <Pressable style={style.highlightedImageContainer}>
+        </View> */}
+        <NaverMapView
+          ref={mapView}
+          style={style.map}
+          showsMyLocationButton={permissionGranted}
+          center={currentLocation ? {...currentLocation, zoom: 15} : undefined}
+          useTextureView>
+          {currentLocation && (
+            <Marker
+              coordinate={currentLocation}
+              image={require('../../assets/images/me.png')}
+              width={40}
+              height={40}
+              pinColor="black"
+            />
+          )}
+          {markers.map(marker => (
+            <Marker
+              image={
+                marker.quantity < 1
+                  ? require('../../assets/images/marker_naver_no.png')
+                  : require('../../assets/images/marker_naver.png')
+              }
+              width={40}
+              height={40}
+              pinColor="black"
+              key={marker.id}
+              coordinate={marker.coordinate}
+              onClick={() => {
+                // Debugging: Log the marker ID and check if this part is being executed
+                console.log(`Marker pressed: ID = ${marker.id}`);
+
+                // Find the coffee shop that matches the marker ID
+                const selectedCoffeeShop = shops.items.find(
+                  shop => shop.donationItemId === marker.id,
+                );
+
+                // Debugging: Log the selected coffee shop details
+                console.log('Selected Coffee Shop:', selectedCoffeeShop);
+
+                if (selectedCoffeeShop) {
+                  dispatch(updateSelectedDonationId(marker.id));
+                  navigation.navigate(Routes.SingleCoffeeShop, {
+                    categoryInformation: {
+                      ...selectedCoffeeShop,
+                      badgeTitle: selectedCoffeeShop.name, // assuming this is the correct field
+                    },
+                  });
+                } else {
+                  // Debugging: Log a message if no matching coffee shop is found
+                  console.log(
+                    `No matching coffee shop found for marker ID ${marker.id}`,
+                  );
+                }
+              }}
+            />
+          ))}
+        </NaverMapView>
+
+        {/* <Pressable style={style.highlightedImageContainer}>
           <Image
             style={style.highlightedImage}
             source={require('../../assets/images/highlighted_image.png')}
             resizeMode="contain"
           />
-        </Pressable>
+        </Pressable> */}
         <View style={style.categoryHeader}>
-          <Header title={'Select Category'} type={2} />
+          {/* <Header title={'Select area'} type={2} /> */}
         </View>
         <View style={style.categories}>
           <FlatList
@@ -114,7 +383,7 @@ const Home = ({navigation}) => {
             onEndReached={() => {
               if (isLoadingCategories) return;
               console.log(
-                'User has reached the end  Fetching page number',
+                'User has reached the end. Fetching page number',
                 categoryPage,
               );
               setIsLoadingCategories(true);
@@ -141,35 +410,42 @@ const Home = ({navigation}) => {
                   isInactive={item.categoryId !== categories.selectedCategoryId}
                 />
               </View>
-            )}></FlatList>
+            )}
+          />
         </View>
-        {donationItems.length > 0 && (
-          <View style={style.donationItemContainer}>
-            {donationItems.map(value => {
-              const categoryInformation = categories.categories.find(
-                val => val.categoryId === categories.selectedCategoryId,
-              );
-              return (
-                <View
-                  key={value.donationItemId}
-                  style={style.singleDonationItem}>
-                  <SingleDonationItem
-                    onPress={selectedDonationId => {
-                      dispatch(updateSelectedDonationId(selectedDonationId));
-                      navigation.navigate(Routes.SingleDonationItem, {
-                        categoryInformation,
-                      });
-                      // console.log(selectedDonationId); shows the item's number
-                    }}
-                    uri={value.image}
-                    donationItemId={value.donationItemId}
-                    donationTitle={value.name}
-                    price={parseFloat(value.price)}
-                    badgeTitle={categoryInformation.name}
-                  />
-                </View>
-              );
-            })}
+        {coffeeShop.length > 0 && (
+          <View style={style.coffeeShopContainer}>
+            <View>
+              {coffeeShop.map(value => {
+                const categoryInformation = categories.categories.find(
+                  val => val.categoryId === categories.selectedCategoryId,
+                );
+                return (
+                  <View
+                    key={value.donationItemId}
+                    style={style.singleDonationItem}>
+                    <SingleCoffeeShop
+                      onPress={selectedCoffeeShopId => {
+                        dispatch(
+                          updateSelectedDonationId(selectedCoffeeShopId),
+                        );
+                        navigation.navigate(Routes.SingleCoffeeShop, {
+                          categoryInformation,
+                        });
+                        console.log('pressed');
+                        // console.log(selectedDonationId); shows the item's number
+                      }}
+                      uri={value.image}
+                      donationItemId={value.donationItemId}
+                      donationTitle={value.name}
+                      price={value.price}
+                      quantity={value.quantity}
+                      badgeTitle={categoryInformation.name}
+                    />
+                  </View>
+                );
+              })}
+            </View>
           </View>
         )}
       </ScrollView>

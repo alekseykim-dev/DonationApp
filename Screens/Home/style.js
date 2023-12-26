@@ -7,18 +7,27 @@ import {
 
 const style = StyleSheet.create({
   header: {
-    marginTop: verticalScale(20),
-    marginHorizontal: horizontalScale(24),
+    marginTop: verticalScale(5),
+    marginHorizontal: horizontalScale(20),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   headerIntroText: {
     fontFamily: 'Inter',
-    fontSize: scaleFontSize(16),
-    lineHeight: scaleFontSize(19),
-    fontWeight: '400',
+    fontSize: scaleFontSize(22),
+    // lineHeight: scaleFontSize(19),
+    fontWeight: '600',
     color: '#636776',
+  },
+  mapDesc: {
+    // marginTop: verticalScale(6),
+    marginLeft: horizontalScale(20),
+    marginBottom: verticalScale(5),
+    fontSize: scaleFontSize(15),
+    fontFamily: 'Inter',
+    color: '#000',
+    fontWeight: '600',
   },
   userName: {
     marginTop: verticalScale(5),
@@ -49,17 +58,22 @@ const style = StyleSheet.create({
   categoryItem: {
     marginRight: horizontalScale(10),
   },
-  donationItemContainer: {
+  coffeeShopContainer: {
     marginTop: verticalScale(20),
-    marginHorizontal: horizontalScale(24),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap'
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   singleDonationItem: {
-    maxWidth: '49%',
-    marginBottom: verticalScale(23)
-  }
+    width: '100%',
+    marginBottom: verticalScale(23),
+  },
+  map: {
+    // marginTop: verticalScale(5),
+    width: '100%',
+    height: verticalScale(400),
+  },
 });
 
 export default style;

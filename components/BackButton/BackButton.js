@@ -8,7 +8,7 @@ import style from './style';
 const BackButton = props => {
   return (
     <Pressable onPress={() => props.onPress()} style={style.container}>
-      <FontAwesomeIcon icon={faArrowLeft} />
+      <FontAwesomeIcon icon={faArrowLeft} size={21} />
     </Pressable>
   );
 };

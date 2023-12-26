@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from 'redux-persist';
 import User from './reducers/User';
 import Categories from './reducers/Categories';
-import Donations from './reducers/Donations';
+import Donations from './reducers/CoffeeShops';
 import {logger} from 'redux-logger';
 
 const rootReducer = combineReducers({
@@ -33,6 +33,7 @@ const store = configureStore({
 
 export default store;
 export const persistor = persistStore(store);
+// deletes previous store data
 // persistor.purge() 
 // purge reloads the store and dispatcehs the data  
 //Works the same as the resetDonations in Home.js

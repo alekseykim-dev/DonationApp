@@ -3,9 +3,10 @@ import {horizontalScale, verticalScale} from '../../assets/styles/scaling';
 
 const style = StyleSheet.create({
   image: {
-    width: horizontalScale(140),
-    height: verticalScale(170),
-    borderRadius: horizontalScale(20)
+    width: horizontalScale(300),
+    height: verticalScale(280),
+    borderRadius: horizontalScale(25),
+    //store width
   },
   badge: {
     position: 'absolute',
@@ -15,9 +16,13 @@ const style = StyleSheet.create({
   },
   donationInformation: {
     marginTop: verticalScale(16),
+    marginHorizontal: horizontalScale(17),
   },
   price: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: verticalScale(5),
+    // marginHorizontal: horizontalScale(20)
   },
 });
 
