@@ -33,6 +33,6 @@ const store = configureStore({
 
 export default store;
 export const persistor = persistStore(store);
-// persistor.purge() 
+// persistor.purge()  // deletes previous data
 // purge reloads the store and dispatcehs the data  
 //Works the same as the resetDonations in Home.js
