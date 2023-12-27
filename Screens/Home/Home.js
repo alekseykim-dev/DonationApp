@@ -27,6 +27,7 @@ import {
   updateSelectedDonationId,
 } from '../../redux/reducers/Donations';
 import {Routes} from '../../navigation/Routes';
+import {logOut} from '../../api/user';
 
 const Home = ({navigation}) => {
   // console.log(user); // from store.js
@@ -89,11 +90,20 @@ const Home = ({navigation}) => {
               <Header title={`${user.displayName} 👋`} />
             </View>
           </View>
-          <Image
-            source={{uri: user.profileImage}}
-            style={style.profileImage}
-            resize={'contain'}
-          />
+          <View>
+            <Image
+              source={{uri: user.profileImage}}
+              style={style.profileImage}
+              resize={'contain'}
+            />
+            <Pressable
+              onPress={async () => {
+                dispatch(resetToInitialState());
+                await logOut();
+              }}>
+              <Header type={3} title={'Logout'} color={'#156cf7'} />
+            </Pressable>
+          </View>
         </View>
         <View style={style.searchBox}>
           <Search />
@@ -141,7 +151,8 @@ const Home = ({navigation}) => {
                   isInactive={item.categoryId !== categories.selectedCategoryId}
                 />
               </View>
-            )}></FlatList>
+            )}
+          />
         </View>
         {donationItems.length > 0 && (
           <View style={style.donationItemContainer}>

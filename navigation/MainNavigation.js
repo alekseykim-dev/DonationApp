@@ -1,3 +1,4 @@
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../Screens/Home/Home';
 import Login from '../Screens/Login/Login';
