@@ -21,10 +21,12 @@ const App = () => {
 
           //we are coming from background to foreground
         }
+        checkToken();
+
         appState.current = nextAppState;
       },
     );
-    checkToken();
+    // checkToken();  it will update the token twice if put here
     console.log('App has been rendered');
   }, []);
 
