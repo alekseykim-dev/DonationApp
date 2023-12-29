@@ -21,10 +21,10 @@ const App = () => {
 
           //we are coming from background to foreground
         }
-        checkToken();
         appState.current = nextAppState;
       },
     );
+    checkToken();
     console.log('App has been rendered');
   }, []);
 
